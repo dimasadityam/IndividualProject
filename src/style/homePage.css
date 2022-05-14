@@ -1,0 +1,13 @@
+.textBold{
+  font-family: Lexend-Bold;
+  color: #2c2c2c;
+  font-size: 60px;
+}
+
+.profilePict{
+  border-radius: 10px;
+  border-width: 3px;
+  border-style: solid;
+  border-color: rgb(255, 255, 255);
+  width: 20%;
+}

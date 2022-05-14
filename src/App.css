@@ -36,3 +36,24 @@
     transform: rotate(360deg);
   }
 }
+
+@font-face {
+  font-family: 'Lexend-Thin';
+  src: local('Lexend'), url(/src/fonts/lexend/Lexend-Thin.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Lexend';
+  src: local('Lexend'), url(/src/fonts/lexend/Lexend-Regular.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Lexend-Bold';
+  src: local('Lexend'), url(/src/fonts/lexend/Lexend-Bold.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Lexend-Black';
+  src: local('Lexend'), url(/src/fonts/lexend/Lexend-Black.ttf) format('truetype');
+}
+

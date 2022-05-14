@@ -1,0 +1,31 @@
+/* .gradient {
+  background: linear-gradient(180deg, rgb(53, 168, 130) 0%, rgb(29, 122, 107) 100%)
+} */
+
+.cGreen {
+  color: #185B5F;
+}
+
+.cGreen2 {
+  color: #32B280;
+}
+
+.cGreen3 {
+  color: #99D9C0;
+}
+
+.cGreen4 {
+  color: #218279;
+}
+
+.cYellow {
+  color: #ffbb00;
+}
+
+.cYellow2 {
+  color: #daa71b;
+}
+
+.cYellow3 {
+  color: #ffdb7a;
+}

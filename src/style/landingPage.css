@@ -1,0 +1,126 @@
+.myBG {
+  background: linear-gradient(180deg, rgb(53, 168, 130) 0%, rgb(29, 122, 107) 100%)
+}
+
+.myBG .patternBG {
+  background: url(../assets/new/patternBG.png);
+  background-repeat: no-repeat;
+  background-size: 100%;
+  padding-top: 0;
+}
+
+
+.myBG .welcome{
+  color: #FFFFFF;
+  font-family: Lexend-bold;
+  font-size: 70px;
+  padding-top: 40%;
+  padding-right: 4%;
+  text-align: center;
+  filter: drop-shadow(5px 5px 5px rgba(34, 34, 34, 0.329));
+}
+
+.myBG .tagline{
+  color: #bedbd7;
+  font-family: Lexend;
+  font-size: 20px;
+  text-align: center;
+}
+
+.btn-color{
+  background-color: #ffffff;
+  color: #38b686;
+  border-radius: 15px;
+  width: 80%;
+  filter: drop-shadow(5px 5px 5px rgba(34, 34, 34, 0.329));
+}
+
+.btn-color:hover{
+  background-color: rgb(255, 188, 43);
+  color: #ffffff;
+  border-radius: 15px;
+  width: 80%;
+  filter: drop-shadow(5px 5px 5px rgba(34, 34, 34, 0.329));
+}
+
+.myBG .span{
+  color: #FFFFFF;
+  font-family: Lexend;
+  font-size: 15px;
+  text-align: center;
+  filter: drop-shadow(5px 5px 5px rgba(34, 34, 34, 0.329));
+}
+.myBG .spanLogin{
+  color: #FFFFFF;
+  font-family: Lexend;
+  font-size: 15px;
+  text-align: center;
+  cursor: pointer;
+  filter: drop-shadow(5px 5px 5px rgba(34, 34, 34, 0.329));
+}
+.myBG .spanLogin:hover{
+  color: #ffbc2b;
+  font-family: Lexend-bold;
+  font-size: 15px;
+}
+
+@media (max-width:768px){
+  .myBG {
+    background: linear-gradient(180deg, rgb(53, 168, 130) 0%, rgb(29, 122, 107) 60%)
+  }
+  
+  .myBG .patternBG {
+    background: url(../assets/new/patternBG-sm.png);
+    background-repeat: no-repeat;
+    background-size: 105%;
+    padding-top: 0;
+  }
+  
+  
+  .myBG .welcome{
+    color: #FFFFFF;
+    font-family: Lexend-bold;
+    font-size: 55px;
+    padding-top: 0;
+    padding-left: 2%;
+    padding-right: 2%;
+    text-align: center;
+    filter: drop-shadow(5px 5px 5px rgba(34, 34, 34, 0.329));
+  }
+  
+  .myBG .tagline{
+    color: #bedbd7;
+    font-family: Lexend;
+    font-size: 14px;
+    text-align: center;
+  }
+  
+  .btn-color{
+    background-color: rgb(255, 255, 255);
+    color: #38b686;
+    border-radius: 15px;
+    width: 80%;
+    filter: drop-shadow(5px 5px 5px rgba(34, 34, 34, 0.329));
+  }
+  
+  .myBG .span{
+    color: #FFFFFF;
+    font-family: Lexend;
+    font-size: 13px;
+    text-align: center;
+    filter: drop-shadow(5px 5px 5px rgba(34, 34, 34, 0.329));
+  }
+  .myBG .spanLogin{
+    color: #FFFFFF;
+    font-family: Lexend;
+    font-size: 13px;
+    text-align: center;
+    cursor: pointer;
+    filter: drop-shadow(5px 5px 5px rgba(34, 34, 34, 0.329));
+  }
+  .myBG .spanLogin:hover{
+    color: rgb(255, 188, 43);
+    font-family: Lexend-bold;
+    font-size: 13px;
+  }
+}
