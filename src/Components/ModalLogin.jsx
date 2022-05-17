@@ -8,7 +8,7 @@ import { API_URL } from "../helper.js"
 import { useDispatch } from "react-redux";
 import "../style/modal.css"
 import "../style/myColor.css"
-import { loginAction } from "../redux/action/usersAction.js";
+import { loginAction, loginUser } from "../redux/action/usersAction";
 import { useNavigate } from 'react-router-dom';
 
 const ModalLogin = (props) => {
@@ -50,13 +50,25 @@ const ModalLogin = (props) => {
       alert("Fill in all form")
     } else {
       if(inForm.email.includes("@")){
-        Axios.get(`${API_URL}/users?email=${inForm.email}&password=${inForm.password}`)
-        .then((response)=>{
-          dispatch(loginAction(response.data[0]))
-          navigate("/home")
-        }).catch((error)=>{
-          console.log(error)
-        })
+        // Axios.get(`${API_URL}/users?email=${inForm.email}&password=${inForm.password}`)
+        // .then((response)=>{
+        //   localStorage.setItem("tokenIdUser", response.data[0].id)
+        //   dispatch(loginAction(response.data[0]))
+        //   dispatch(loginUser(response.data[0]))
+        //   navigate("/home")
+        // }).catch((error)=>{
+        //   console.log(error)
+        // })
+        let a = inForm.email
+        let b = inForm.password
+        let loginUsers = loginUser(a, b)
+        dispatch(loginUsers)
+      } else if (inForm.username.includes(`${inForm.username}`)){
+        let a = inForm.username
+        let b = inForm.password
+        // let c = inForm.username
+        let loginUsers = loginUser(a, b)
+        dispatch(loginUsers) 
       } else {
         alert("Email Wrong")
       }

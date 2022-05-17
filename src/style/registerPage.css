@@ -16,13 +16,14 @@
 }
 .btn-color{
   background-color: #38b686;
+  /* background-color: #eef5f4; */
   color: #FFF;
   border-radius: 5px;
   filter: drop-shadow(3px 3px 7px rgba(34, 34, 34, 0.329));
 }
 
 .btn-color:hover{
-  background-color: rgb(255, 188, 43);
+  background-color: #ffbc2b;
   color: #ffffff;
   border-radius: 5px;
   filter: drop-shadow(3px 3px 7px rgba(34, 34, 34, 0.329));
@@ -31,12 +32,13 @@
 .h4-register{
   font-family: Lexend-Bold;
   font-size: 200%;
-  color: rgb(31, 37, 49);
+  color: #1f2531;
 }
 
 .label-register{
   font-family: Lexend;
   font-size: 100%;
+  color: rgb(31, 37, 49);
 }
 
 .textStrong{

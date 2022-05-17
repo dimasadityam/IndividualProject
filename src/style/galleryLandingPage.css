@@ -1,7 +1,7 @@
 .love{
   color: rgb(255, 255, 255);
   width: 100%;
-  margin-top: 80px;
+  margin-top: 120px;
   filter: drop-shadow(5px 5px 5px rgba(34, 34, 34, 0.329));
   font-size: 80px;
 }
@@ -57,7 +57,7 @@
   margin-bottom: 12px;
   border-radius: 20px;
   width: 100%;
-  margin-top: 80px;
+  margin-top: 120px;
 }
 
 .gallery .imgGal4{

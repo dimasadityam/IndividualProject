@@ -30,6 +30,7 @@ const NavbarComponent = (props) =>{
         }
       })
 
+      console.log("profilepict", profilepict)
     console.log("show navbar",show)
     return(
         <>
@@ -57,10 +58,21 @@ const NavbarComponent = (props) =>{
                                 // className="d-flex justify-content-end"
                                 navbar
                                 >
-                                    {/* <FaUserCircle /> */}
-                                    <img src={profilepict} alt="profile picture" />
-                                    <span className="Lexend ps-2" style={{cursor: "pointer"}}
+                                    <img src={profilepict} style={{width:"15%", borderRadius:"50%"}} alt="profile picture" />
+                                    <span className="Lexend ps-2 pt-1" style={{cursor: "pointer"}}
                                         onClick={() => navigate("/profile")}>{username}</span>
+                                        {/* <Dropdown isOpen={dropOpen} toggle={()=>setDropOpen(!dropOpen)}>
+                                            <DropdownToggle data-toggle="dropdown" tag="span">
+                                                <DropdownMenu>
+                                                    <DropdownItem>
+                                                        Edit Profile
+                                                    </DropdownItem>
+                                                    <DropdownItem>
+                                                        Log Out
+                                                    </DropdownItem>
+                                                </DropdownMenu>
+                                            </DropdownToggle>
+                                        </Dropdown> */}
                                     {/* <a class="cta me-3">
                                         <span onClick={() => setShow(!show)}>Login</span>
                                     </a>

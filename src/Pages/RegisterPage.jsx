@@ -9,6 +9,9 @@ import { useNavigate } from "react-router-dom";
 import vectorRegister from "../assets/new/vectorRegister.png"
 import "../style/registerPage.css"
 import { getUsernamesAction } from '../redux/action/usernameAction'
+import { FaUserCircle } from "react-icons/fa"
+// import { FaUserCircle } from "@react-icons/all-files/fa/FaUserCircle";
+
 
 const RegisterPage=()=>{
 
@@ -113,7 +116,7 @@ const RegisterPage=()=>{
                   password,
                   fullname:"",
                   bio:"",
-                  profilepict:"",
+                  profilepict:"https://sman11tangerangselatan.sch.id/images/user-u.jpg",
                   likepost:[]
                 })
                 dispatch(loginAction(res.data))
@@ -219,7 +222,8 @@ const RegisterPage=()=>{
                         </InputGroupText>
               </InputGroup>
             </div>
-            <Button className="w-100 btn-color mt-3" onClick={handleRegister} type="button">Regis Now</Button>
+            <Button className="w-100 btn-color mt-3" onClick={handleRegister} type="button"
+                style={{fontFamily:"Lexend"}}>Regis Now</Button>
           </div>
           <div className="col-12 col-md-6 MB">
             <div className="vectorRegister">

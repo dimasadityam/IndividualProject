@@ -48,6 +48,16 @@
 }
 
 @font-face {
+  font-family: 'Lexend-Medium';
+  src: local('Lexend'), url(/src/fonts/lexend/Lexend-Medium.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Lexend-SemiBold';
+  src: local('Lexend'), url(/src/fonts/lexend/Lexend-SemiBold.ttf) format('truetype');
+}
+
+@font-face {
   font-family: 'Lexend-Bold';
   src: local('Lexend'), url(/src/fonts/lexend/Lexend-Bold.ttf) format('truetype');
 }

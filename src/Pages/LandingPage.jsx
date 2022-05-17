@@ -27,7 +27,7 @@ const LandingPage = (props) => {
                 <h1 className="welcome">Welcome to post-it</h1>
                 <p className="tagline">post your story, get the audience engagement,<br /> likes and share to your friends</p>
                 <div className="text-center pt-5 pb-3">
-                  <button className="btn btn-color fw-bold" type="button"
+                  <button className="btn btn-color" type="button" style={{fontFamily:"Lexend"}}
                     onClick={() => navigate("/register")}> Join post-it now</button>
                 </div>
                 <div className="text-center">

@@ -8,7 +8,7 @@ import { API_URL } from "../helper.js"
 import { useDispatch } from "react-redux";
 import "../style/modal.css"
 import "../style/myColor.css"
-import { loginAction } from "../redux/action/usersAction.js";
+import { loginAction, loginUser } from "../redux/action/usersAction.js";
 import { useNavigate } from 'react-router-dom';
 import { RiCloseLine } from "react-icons/ri"
 import styles from "../style/modal.css"
@@ -70,11 +70,12 @@ const ModalNew = (props) => {
         Axios.get(`${API_URL}/users?email=${inForm.email}&password=${inForm.password}`)
         .then((response)=>{
           dispatch(loginAction(response.data[0]))
+          // dispatch(loginUser(response.data[0]))
           console.log(response.data[0])
           if(response.data[0] == undefined) {
             alert("user unregistered, please register first")
           } else {
-            alert("login success")
+            // alert("login success")
             navigate("/home")
           }
         }).catch((error)=>{
@@ -84,6 +85,7 @@ const ModalNew = (props) => {
           Axios.get(`${API_URL}/users?username=${inForm.email}&password=${inForm.password}`)
           .then((response)=>{
             dispatch(loginAction(response.data[0]))
+            // dispatch(loginUser(response.data[0]))
             if(response.data[0] == undefined) {
               alert("user unregistered, please register first")
             } else {

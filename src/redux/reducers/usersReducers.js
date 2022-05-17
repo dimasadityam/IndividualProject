@@ -1,13 +1,6 @@
 
 const INITIAL_STATE = {
-  username: "",
-  email: "",
-  password: "",
-  fullname: "",
-  bio: "",
-  profilepict: "",
-  likepost: [],
-  id: null
+  users: []
 }
 
 export const usersReducer = (state = INITIAL_STATE, action) => {
@@ -16,6 +9,12 @@ export const usersReducer = (state = INITIAL_STATE, action) => {
       console.log("Data loginAction userReducers", action.payload)
       return { ...state, ...action.payload };
 
+    case "GET_USERS":
+      console.log("Data Dari Action", action.payload)
+      return { ...state, users: action.payload };
+
+    case "UPDATE_PROFILE":
+      return { ...state, users: action.payload }
     case "LOGOUT":
       return INITIAL_STATE;
 
