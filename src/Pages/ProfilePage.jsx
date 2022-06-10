@@ -6,99 +6,77 @@ import NavbarComponentProfile from "../Components/navbarProfile";
 import "../style/profilePage.css"
 import { useDispatch, useSelector } from 'react-redux'
 import { Button, Input } from "reactstrap";
-import { updateProfileAction } from "../redux/action/usersAction";
+import { updateProfileAction, loginAction } from "../redux/action/usersAction";
+import { FaUserEdit } from "react-icons/fa"
+import ModalDetail from "../Components/ModalDetail";
 
 const ProfilePage=()=>{
 
   const dispatch = useDispatch();
   const [editProfile, setEditProfile] = React.useState(false);
-  const [usernameProfile, setUsernameProfile]=React.useState()
-  const [fullnameProfile, setFullnameProfile]=React.useState()
-  const [bioProfile, setBioProfile]=React.useState()
-  const [emailProfile, setEmailProfile]=React.useState()
-
+  const [show, setShow] = React.useState(false);
+  const [dataID, setDataID] = React.useState(0);
+  
+  
   const { postings }=useSelector((state)=>{
     return{
       postings:state.postingsReducer.postings
     }
-})
-
+  })
+  
   const { users, username, fullname, bio, email }=useSelector((state)=>{
     return{
-        users:state.usersReducer.users,
-        username:state.usersReducer.username,
-        fullname:state.usersReducer.fullname,
-        bio:state.usersReducer.bio,
-        email:state.usersReducer.email,
+      users:state.usersReducer.users,
+      username:state.usersReducer.username,
+      fullname:state.usersReducer.fullname,
+      bio:state.usersReducer.bio,
+      email:state.usersReducer.email,
     }
-})
+  })
 
-const printMyPost=()=>{
-  console.log("cek Mypositngs",postings)
+  const [usernameProfile, setUsernameProfile]=React.useState(username)
+  const [fullnameProfile, setFullnameProfile]=React.useState(fullname)
+  const [bioProfile, setBioProfile]=React.useState(bio)
+  const [emailProfile, setEmailProfile]=React.useState(email)
+  
+  // if(showModalDetail){
+  //   setTimeout(()=> setShowModalDetail(!showModalDetail), 3500)
+  // }
+  
+  console.log("cek dataID",dataID)
+  const printMyPost=()=>{
+
+  // <ModalDetail onClose={() => setShowModalDetail(!showModalDetail)} show={showModalDetail} data={dataID} />
   return postings.map((value,index) =>{
     if(value.username == username){
-      return <img className="pictMyPost" src={value.src} alt="my posting"/>
+      return <>
+        <img className="pictMyPost" src={value.src} alt="my posting"
+              onClick={() => {(setShow(!show)); (setDataID(value.idPosting))}}/>
+              {/* onClick={() => {(setShow(!show)); (setDataID(value.id))}}/> */}
+      </>
     }
   })
 }
 
-console.log("edit profile", editProfile)
+console.log("showModalDetail", show)
+// console.log("edit profile", editProfile)
 
 const printUsers=()=>{
   if(editProfile==false){
     return users.map((value, index) => {
       if(value.username == username){
-        return <div key={value.id} className="row">
-          <div className="text-center col-md-5">
-            <img src={value.profilepict} style={{width:"35%", borderRadius:"50%"}} className="mt-5" alt="profile picture" />
+        return <div key={value.User} className="row">
+          <div className="text-center col-md-4">
+            <a href="/profile/editprofile">
+              <FaUserEdit className="icon-edit" size={45} />
+            </a>
+            <img src={value.profilepict} style={{width:"45%", borderRadius:"50%"}} className="mt-5" alt="profile picture" />
             <div className="textUsername fw-bold mt-2">{value.username}</div>
           </div>
-          <div className="col-md-7 mt-4">
-            <Button onClick={()=> setEditProfile(!editProfile)} className="btn-color-profile textBtn">Edit Profile</Button> 
-            <div className="row mt-3">
-              <div className="col-md-2">
-                <div className="textProfile">Username</div>
-              </div>
-              <div className="col-md-1">
-                <div className="textProfile">:</div>
-              </div>
-              <div className="col-md-9">
-                <div className="textProfile">{value.username}</div>
-              </div>
-            </div>
-            <div className="row mt-4">
-              <div className="col-md-2">
-                <div className="textProfile">Full Name</div>
-              </div>
-              <div className="col-md-1">
-                <div className="textProfile">:</div>
-              </div>
-              <div className="col-md-9">
-                <div className="textProfile">{value.fullname}</div>
-              </div>
-            </div>
-            <div className="row mt-4">
-              <div className="col-md-2">
-                <div className="textProfile">Biodata</div>
-              </div>
-              <div className="col-md-1">
-                <div className="textProfile">:</div>
-              </div>
-              <div className="col-md-9">
-                <div className="textProfile">{value.bio}</div>
-              </div>
-            </div>
-            <div className="row mt-4">
-              <div className="col-md-2">
-                <div className="textProfile">Email</div>
-              </div>
-              <div className="col-md-1">
-                <div className="textProfile">:</div>
-              </div>
-              <div className="col-md-9">
-                <div className="textProfile">{value.email}</div>
-              </div>
-          </div>
+          <div className="col-md-8 mt-5">
+                <div className="textProfile mt-3">{value.fullname}</div>
+                <div className="text-thin fw-bold mt-2">{value.bio}</div>
+                <div className="text-thin fw-bold mt-2">{value.email}</div>
             </div>
         </div>
       }
@@ -106,11 +84,10 @@ const printUsers=()=>{
   } else {
     return users.map((value, index) => {
       if(value.username == username){
-        return <div key={value.id} className="row">
+        return <div key={value.idUser} className="row">
           <div className="text-center col-md-5">
             <img src={value.profilepict} style={{width:"35%", borderRadius:"50%"}} className="mt-5" alt="profile picture" />
             <div className="textUsername fw-bold mt-2">{value.username}</div>
-            {/* <Input className="textUsername fw-bold mt-2" value={value.username} /> */}
           </div>
           <div className="col-md-7 mt-4">
             <Button href="/profile" onClick={handleEditProfile} className="btn-color-save textBtn">Save</Button> 
@@ -166,37 +143,45 @@ const printUsers=()=>{
   }
 }
 
+// console.log("usernameP", usernameProfile, "fullnameP", fullnameProfile, "bioP", bioProfile, "emailP", emailProfile)
   const handleEditProfile=async()=>{
     try {
       let filterQuery = `?`
       filterQuery+=`username_like=${username}`
-      let response = await Axios.get(`${API_URL}/users${filterQuery}`)
-      setUsernameProfile(username)
-      setFullnameProfile(fullname)
-      setBioProfile(bio)
-      setEmailProfile(email)
-      console.log("response edit profile username", response.data.username)
-      console.log("usernameP", usernameProfile, "fullnameP", fullnameProfile, "bioP", bioProfile, "emailP", emailProfile)
-      // if(response.data.username !== username){
-      //   let res = await Axios.patch(`${API_URL}/users${filterQuery}`, {
-      //     username: usernameProfile,
-      //     fullname: fullnameProfile,
-      //     bio: bioProfile,
-      //     email: emailProfile
-      //   })
-      //   console.log("cek res patch profile",res.data)
-      //   dispatch(updateProfileAction(res.data))
-      // } else {
-      //   alert("username not available")
-      // }
+      let responseUser = await Axios.get(`${API_URL}/users${filterQuery}`)
+      if (responseUser.data < 1){
+        console.log("RESPONSE USER DATA", responseUser.data)
+        alert("responseUser.data < 1")
+        setUsernameProfile(username)
+        setFullnameProfile(fullname)
+        setBioProfile(bio)
+        setEmailProfile(email)
+
+        // console.log("usernameP", usernameProfile, "fullnameP", fullnameProfile, "bioP", bioProfile, "emailP", emailProfile)
+        if(usernameProfile=="" || emailProfile==""){
+          alert("fill username and email")
+        } else {
+          let res = await Axios.patch(`${API_URL}/users/2`, {
+            username: usernameProfile,
+            email: emailProfile,
+            fullname: fullnameProfile,
+            bio: bioProfile
+          })
+          console.log("cek res patch profile",res.data)
+          dispatch(loginAction(res.data))
+          // alert("username not available")
+        }
+      }
     } catch (error) {
       console.log(error)
     }
   }
-
+  
   return (
   <div style={{backgroundColor:"#eef5f4"}}>
     <NavbarComponentProfile />
+    <ModalDetail onClose={() => setShow(!show)} show={show} data={dataID} />
+    {/* <ModalDetail isOpen={show} data={dataID}/> */}
       <div className="container">
         {/* <div className="row">
           <div className="col-md-4 pt-3"> */}

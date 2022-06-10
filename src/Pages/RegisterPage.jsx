@@ -116,8 +116,7 @@ const RegisterPage=()=>{
                   password,
                   fullname:"",
                   bio:"",
-                  profilepict:"https://sman11tangerangselatan.sch.id/images/user-u.jpg",
-                  likepost:[]
+                  profilepict:"https://sman11tangerangselatan.sch.id/images/user-u.jpg"
                 })
                 dispatch(loginAction(res.data))
                 navigate("/")

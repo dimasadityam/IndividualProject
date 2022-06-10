@@ -3,7 +3,7 @@ import React from "react";
 import Axios from "axios";
 import { API_URL } from "../helper"
 import Gallery from "../Components/galleryLandingPage";
-import ModalLogin from "../Components/ModalLogin";
+// import ModalLogin from "../Components/ModalLogin";
 import "../style/landingPage.css"
 import ModalNew from "../Components/Modal";
 import { useNavigate } from "react-router-dom";
@@ -42,9 +42,6 @@ const LandingPage = (props) => {
             <br />
             <br />
             <br />
-            <div id="footer">
-
-            </div>
         </div>
       </div>
       </>

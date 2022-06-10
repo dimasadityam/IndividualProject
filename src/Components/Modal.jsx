@@ -66,12 +66,14 @@ const ModalNew = (props) => {
     if(inForm.email== "" || inForm.password== ""){
       alert("Fill in all form")
     } else {
+      console.log("inForm username", inForm.username)
       if(inForm.email.includes("@")){
         Axios.get(`${API_URL}/users?email=${inForm.email}&password=${inForm.password}`)
         .then((response)=>{
+          localStorage.setItem("tokenIdUser", response.data[0].idUser)
           dispatch(loginAction(response.data[0]))
           // dispatch(loginUser(response.data[0]))
-          console.log(response.data[0])
+          console.log("res data login email",response.data[0])
           if(response.data[0] == undefined) {
             alert("user unregistered, please register first")
           } else {
@@ -82,14 +84,16 @@ const ModalNew = (props) => {
           console.log(error)
         })
       } else if (inForm.email){
-          Axios.get(`${API_URL}/users?username=${inForm.email}&password=${inForm.password}`)
-          .then((response)=>{
-            dispatch(loginAction(response.data[0]))
-            // dispatch(loginUser(response.data[0]))
+        Axios.get(`${API_URL}/users?username=${inForm.email}&password=${inForm.password}`)
+        .then((response)=>{
+          localStorage.setItem("tokenIdUser", response.data[0].idUser)
+          dispatch(loginAction(response.data[0]))
+          // dispatch(loginUser(response.data[0]))
+          console.log("res data login username",response.data[0])
             if(response.data[0] == undefined) {
               alert("user unregistered, please register first")
             } else {
-              alert("login success")
+              // alert("login success")
               navigate("/home")
             }
           }).catch((error)=>{

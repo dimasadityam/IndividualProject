@@ -35,13 +35,14 @@ export const keepLogin = () => {
   return async (dispatch) => {
     try {
       let token = localStorage.getItem("tokenIdUser");
+      console.log("token", token)
       // memeriksa adanya token
       if (token) {
-        let res = await axios.get(`${API_URL}/users?id=${token}`)
+        let res = await axios.get(`${API_URL}/users?idUser=${token}`)
         // memeriksa adanya data user atau tidak
         if (res.data.length == 1) {
           //
-          localStorage.setItem("tokenIdUser", res.data[0].id)
+          localStorage.setItem("tokenIdUser", res.data[0].idUser)
           dispatch(loginAction(res.data[0]))
         }
       }

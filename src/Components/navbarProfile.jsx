@@ -67,7 +67,7 @@ const NavbarComponentProfile = (props) => {
                                     <Dropdown isOpen={dropOpen} toggle={() => setDropOpen(!dropOpen)}>
                                         <DropdownToggle data-toggle="dropdown" tag="span">
                                             <DropdownMenu>
-                                                <DropdownItem>
+                                                <DropdownItem href="/profile/editprofile">
                                                     Edit Profile
                                                 </DropdownItem>
                                                 <DropdownItem divider/>

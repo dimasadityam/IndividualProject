@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FaUserCircle } from "react-icons/fa"
-import ModalLogin from "./ModalLogin";
+// import ModalLogin from "./ModalLogin";
 import ModalNew from "./Modal"
 import "../style/navbar.css"
 import "../style/myColor.css"

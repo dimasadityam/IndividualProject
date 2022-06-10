@@ -13,7 +13,8 @@ import { useDispatch } from 'react-redux'
 import Axios from 'axios';
 import { API_URL } from './helper';
 import { getPostingsAction } from './redux/action/postingsAction';
-import { loginAction, getUsersAction } from "./redux/action/usersAction"
+import { loginAction, getUsersAction, keepLogin } from "./redux/action/usersAction"
+import EditProfilePage from './Pages/editProfilePage';
 
 
 function App() {
@@ -40,24 +41,24 @@ function App() {
     })
   }
 
-  const keepLogin=()=>{
-    let token = localStorage.getItem("tokenIdUser")
-    if(token){
-      Axios.get(`${API_URL}/users?id=${token}`)
-      .then((res)=>{
-        if(res.data.length === 1){
-          localStorage.setItem("tokenIdUser", res.data[0].id)
-          dispatch(loginAction(res.data[0]))
-        }
-      }).catch((error)=>{
-        console.log(error)
-      })
-    }
-  }
+  // const keepLogin=()=>{
+  //   let token = localStorage.getItem("tokenIdUser")
+  //   if(token){
+  //     Axios.get(`${API_URL}/users?id=${token}`)
+  //     .then((res)=>{
+  //       if(res.data.length === 1){
+  //         localStorage.setItem("tokenIdUser", res.data[0].id)
+  //         dispatch(loginAction(res.data[0]))
+  //       }
+  //     }).catch((error)=>{
+  //       console.log(error)
+  //     })
+  //   }
+  // }
 
   React.useEffect(()=>{
     getPostings();
-    keepLogin();
+    dispatch(keepLogin());
     getUsers();
   },[])
 
@@ -68,6 +69,7 @@ function App() {
         <Route path='/register' element={<RegisterPage />} />
         <Route path='/home' element={<HomePage />} />
         <Route path='/profile' element={<ProfilePage />} />
+        <Route path='/profile/editprofile' element={<EditProfilePage />} />
       </Routes>
     </div>
   );

@@ -2,6 +2,18 @@
   font-family: Lexend;
   color: #1f2531;
 }
+
+.icon-edit{
+  background-color:#2C987A ;
+  color: #ffffff;
+  padding: 8px;
+  border-radius: 50%;
+  position:relative;
+  top: 23%;
+  left: 48%;
+  cursor: pointer;
+}
+
 .btn-color-profile{
   background-color: #eef5f4;
   /* background-color: #eef5f4; */

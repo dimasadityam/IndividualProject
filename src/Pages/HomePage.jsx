@@ -9,6 +9,8 @@ import { useNavigate } from "react-router-dom";
 import "../style/homePage.css"
 import img7 from "../assets/new/image (7).jpg"
 import NavbarComponent from "../Components/navbar";
+import { FaRegHeart } from "react-icons/fa"
+import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io"
 // import { getUsersAction } from './redux/action/usersAction'
 
 const HomePage=(props)=>{
@@ -21,6 +23,7 @@ const HomePage=(props)=>{
   const [confPassword, setConfPassword]=React.useState("")
   const [selectedIdx, setSelectedIdx] = React.useState(null)
   const [img, setImg]=React.useState();
+  const [likePost, setLikePost]=React.useState(false);
 
   console.log("img upload",img)
 
@@ -29,18 +32,20 @@ const HomePage=(props)=>{
     setImg(URL.createObjectURL(file));
   };
 
-  const { users, profilepict, postings }=useSelector((state)=>{
+  const { users, profilepict, postings, comments }=useSelector((state)=>{
     return{
         users:state.usersReducer.users,
         profilepict:state.usersReducer.profilepict,
-        postings:state.postingsReducer.postings
+        postings:state.postingsReducer.postings,
+        comments:state.commentsReducer.comments
     }
 })
   
+console.log("COMMENTS",comments)
   const printPosting=()=>{
-    console.log("cek positngs",postings)
+    // console.log("cek positngs",postings)
     return postings.map((value,index)=>{
-      console.log("value posting",value.username)
+      // console.log("value posting",value.username)
       return <div className="cardNew">
           <div className="cNHeader">
             <img src={profilepict} style={{width:"3%", borderRadius:"50%"}} alt="profile picture" />
@@ -49,11 +54,32 @@ const HomePage=(props)=>{
           <div className="cNBody row">
             {/* <span style={{color:"black"}}>tester</span> */}
           <div className="col-md-5 pb-4">
-            <img className="pictPost" src={value.src} alt="posting user" />
+            <img className="pictPost" style={{cursor:"pointer"}} src={value.src}
+                onDoubleClick={()=> setLikePost(!likePost)} alt="posting user" />
           </div>
+          {/* <div className="col-md-1 text-center">
+            <span className="text">tes</span>
+          </div> */}
           <div className="col-md-7 position-relative">
-            <span className="text" style={{color:"black"}}>{value.caption}</span>
-            <div className="textDate mt-3">{value.createDate}</div>
+            <div className="row">
+              <div className="col-md-1 text-center">
+                <div>
+                  {
+                  likePost == false ?
+                  <IoMdHeartEmpty className="mt-1" size={30} style={{color:"#2C987A"}}/>
+                  :
+                  <IoMdHeart className="mt-1" size={30} style={{color:"#2C987A"}}/>
+                }
+                </div>
+                <span className="text fw-bold" style={{fontSize:"9px", color:"#2C987A"}}>{value.nuberLikes} Likes</span>
+              </div>
+              <div className="col-md-11">
+                <span className="text" style={{color:"black"}}>{value.username} </span>
+                <span className="text-thin fw-bold" style={{color:"black"}}>{value.caption}</span>
+                <div className="textDate mt-3">{value.createDate}</div>
+                <div className="text" style={{color:"black"}}>{comments[1]}</div>
+              </div>
+            </div>
             {/* <span style={{color:"black"}}>{value.numberLikes}</span> */}
             {/* <div className="position-relative"> */}
             <div className="cNFooter" >
@@ -76,12 +102,11 @@ const HomePage=(props)=>{
 
           let res = await Axios.post(`${API_URL}/users`, {
             fullname:"",
-            bio:[],
+            bio:"",
             username,
             email,
             password,
             profilepict:"",
-            likepost:[]
           })
           // console.log("Respon Resgiter", res.data)
           // dispatch(getUsersAction(res.data))
@@ -104,29 +129,7 @@ const HomePage=(props)=>{
     <div style={{backgroundColor:"#eef5f4"}}>
     <NavbarComponent />
       <div className="container">
-        {/* <br /> */}
-        {/* <input type="file" onChange={onImageChange} />
-        <img src={img} alt="" /> */}
-        {/* <div className="row"> */}
-          {/* <div className="col-md-3" style={{backgroundColor:"#dbcaaa"}}>
-            <Label style={{cursor: "pointer"}} onClick={() => navigate("/profile")}>Profile</Label>
-            <div className="text-center">
-              <img className="profilePict" src={img} />
-              <img className="profilePict" src={profilepict} />
-            </div>
-            <div>
-              {printUsers()}
-            </div>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-          </div> */}
           <div>
-            {/* <Label>Posting from all user</Label> */}
             <div className="pt-3">
               {printPosting()}
             </div>
