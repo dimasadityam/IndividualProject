@@ -6,7 +6,8 @@ import NavbarComponentProfile from "../Components/navbarProfile";
 import "../style/profilePage.css"
 import { useDispatch, useSelector } from 'react-redux'
 import { Button, Input } from "reactstrap";
-import { updateProfileAction, loginAction } from "../redux/action/usersAction";
+import { updateProfileAction, loginAction, getUsers } from "../redux/action/usersAction";
+import { getPostings, getFilterPostings, getLikePostings } from "../redux/action/postingsAction"
 import { FaUserEdit } from "react-icons/fa"
 import ModalDetail from "../Components/ModalDetail";
 
@@ -14,18 +15,26 @@ const ProfilePage=()=>{
 
   const dispatch = useDispatch();
   const [editProfile, setEditProfile] = React.useState(false);
+  const [myPost, setMyPost] = React.useState(true);
+  const [likesPost, setLikesPost] = React.useState(false);
   const [show, setShow] = React.useState(false);
   const [dataID, setDataID] = React.useState(0);
+  const [usernameProfile, setUsernameProfile]=React.useState("")
+  const [fullnameProfile, setFullnameProfile]=React.useState("")
+  const [bioProfile, setBioProfile]=React.useState("")
+  const [emailProfile, setEmailProfile]=React.useState("")
   
   
-  const { postings }=useSelector((state)=>{
+  // const { postings }=useSelector((state)=>{
+  //   return{
+  //     postings:state.postingsReducer.postings
+  //   }
+  // })
+  
+  const { postings, likeposts, users, username, fullname, bio, email }=useSelector((state)=>{
     return{
-      postings:state.postingsReducer.postings
-    }
-  })
-  
-  const { users, username, fullname, bio, email }=useSelector((state)=>{
-    return{
+      postings:state.postingsReducer.postings,
+      likeposts:state.postingsReducer.likeposts,
       users:state.usersReducer.users,
       username:state.usersReducer.username,
       fullname:state.usersReducer.fullname,
@@ -34,44 +43,49 @@ const ProfilePage=()=>{
     }
   })
 
-  const [usernameProfile, setUsernameProfile]=React.useState(username)
-  const [fullnameProfile, setFullnameProfile]=React.useState(fullname)
-  const [bioProfile, setBioProfile]=React.useState(bio)
-  const [emailProfile, setEmailProfile]=React.useState(email)
-  
+  React.useEffect(()=>{
+    dispatch(getFilterPostings());
+    dispatch(getLikePostings());
+    dispatch(getUsers());
+  }, [])
+
   // if(showModalDetail){
   //   setTimeout(()=> setShowModalDetail(!showModalDetail), 3500)
   // }
   
+  console.log("cek postings",postings)
+  console.log("cek likeposts",likeposts)
   console.log("cek dataID",dataID)
   const printMyPost=()=>{
-
-  // <ModalDetail onClose={() => setShowModalDetail(!showModalDetail)} show={showModalDetail} data={dataID} />
   return postings.map((value,index) =>{
-    if(value.username == username){
-      return <>
-        <img className="pictMyPost" src={value.src} alt="my posting"
-              onClick={() => {(setShow(!show)); (setDataID(value.idPosting))}}/>
-              {/* onClick={() => {(setShow(!show)); (setDataID(value.id))}}/> */}
-      </>
-    }
+    return <img className="pictMyPost" src={value.src} alt="my posting"
+            onClick={() => {(setShow(!show)); (setDataID(value.idposting))}}
+            />
+  })
+}
+  const printLikePost=()=>{
+  return likeposts.map((value,index) =>{
+    return <img className="pictMyPost" src={value.src} alt="my like posting"
+            onClick={() => {(setShow(!show)); (setDataID(value.idposting))}}
+            />
   })
 }
 
-console.log("showModalDetail", show)
+// console.log("showModalDetail", show)
 // console.log("edit profile", editProfile)
 
 const printUsers=()=>{
   if(editProfile==false){
     return users.map((value, index) => {
-      if(value.username == username){
-        return <div key={value.User} className="row">
+      // console.log(value.username == username)
+      // if(value.username == username){
+        return <div key={value.iduser} className="row">
           <div className="text-center col-md-4">
             <a href="/profile/editprofile">
               <FaUserEdit className="icon-edit" size={45} />
             </a>
             <img src={value.profilepict} style={{width:"45%", borderRadius:"50%"}} className="mt-5" alt="profile picture" />
-            <div className="textUsername fw-bold mt-2">{value.username}</div>
+            <div className="textUsername fw-bold mt-2 ps-5">{value.username}</div>
           </div>
           <div className="col-md-8 mt-5">
                 <div className="textProfile mt-3">{value.fullname}</div>
@@ -79,14 +93,14 @@ const printUsers=()=>{
                 <div className="text-thin fw-bold mt-2">{value.email}</div>
             </div>
         </div>
-      }
+      // }
     })
   } else {
     return users.map((value, index) => {
-      if(value.username == username){
-        return <div key={value.idUser} className="row">
+      // if(value.username == username){
+        return <div key={value.iduser} className="row">
           <div className="text-center col-md-5">
-            <img src={value.profilepict} style={{width:"35%", borderRadius:"50%"}} className="mt-5" alt="profile picture" />
+            <img src={users[0].profilepict} style={{width:"35%", borderRadius:"50%"}} className="mt-5" alt="profile picture" />
             <div className="textUsername fw-bold mt-2">{value.username}</div>
           </div>
           <div className="col-md-7 mt-4">
@@ -100,7 +114,9 @@ const printUsers=()=>{
                 <div className="textProfile">:</div>
               </div>
               <div className="col-md-9">
-                <Input className="textProfile" type="text" onChange={(e)=>setUsernameProfile(e.target.value)} defaultValue={value.username} />
+                <Input className="textProfile" type="text"
+                onChange={(e)=>setUsernameProfile(e.target.value)}
+                defaultValue={value.username} />
               </div>
             </div>
             <div className="row mt-3">
@@ -111,7 +127,10 @@ const printUsers=()=>{
                 <div className="textProfile">:</div>
               </div>
               <div className="col-md-9">
-                <Input className="textProfile" type="text" onChange={(e)=>setFullnameProfile(e.target.value)} defaultValue={value.fullname} />
+                <Input className="textProfile" type="text"
+                  onChange={(e)=>setFullnameProfile(e.target.value)}
+                  defaultValue={value.fullname}
+                />
               </div>
             </div>
             <div className="row mt-3">
@@ -122,7 +141,10 @@ const printUsers=()=>{
                 <div className="textProfile">:</div>
               </div>
               <div className="col-md-9">
-                <Input type="textarea" className="textProfile" onChange={(e)=>setBioProfile(e.target.value)} defaultValue={value.bio} />
+                <Input type="textarea" className="textProfile"
+                  onChange={(e)=>setBioProfile(e.target.value)}
+                  defaultValue={value.bio}
+                />
               </div>
             </div>
             <div className="row mt-3">
@@ -133,12 +155,15 @@ const printUsers=()=>{
                 <div className="textProfile">:</div>
               </div>
               <div className="col-md-9">
-                <Input className="textProfile" type="text" onChange={(e)=>setEmailProfile(e.target.value)} defaultValue={value.email} />
+                <Input className="textProfile" type="text"
+                  onChange={(e)=>setEmailProfile(e.target.value)}
+                  defaultValue={value.email}
+                />
               </div>
           </div>
             </div>
         </div>
-      }
+      // }
     })
   }
 }
@@ -150,7 +175,7 @@ const printUsers=()=>{
       filterQuery+=`username_like=${username}`
       let responseUser = await Axios.get(`${API_URL}/users${filterQuery}`)
       if (responseUser.data < 1){
-        console.log("RESPONSE USER DATA", responseUser.data)
+        // console.log("RESPONSE USER DATA", responseUser.data)
         alert("responseUser.data < 1")
         setUsernameProfile(username)
         setFullnameProfile(fullname)
@@ -177,6 +202,7 @@ const printUsers=()=>{
     }
   }
   
+  console.log("mypost", myPost, "likesPost", likesPost)
   return (
   <div style={{backgroundColor:"#eef5f4"}}>
     <NavbarComponentProfile />
@@ -194,12 +220,20 @@ const printUsers=()=>{
               <hr />
           {/* <div className="col-md-8 pt-3"> */}
             <div className="text-center">
-              <span className="textJudul" style={{cursor: "pointer"}}>My Post</span>
+              <span className="textJudul" style={{cursor: "pointer"}}
+                onClick={()=> {(setMyPost(true)); (setLikesPost(false))}}>My Post</span>
               <span className="textJudul mx-5">|</span>
-              <span className="textJudul" style={{cursor: "pointer"}}>My Like Post</span>
+              <span className="textJudul" style={{cursor: "pointer"}}
+                onClick={()=> {(setLikesPost(true)); (setMyPost(false))}}>My Like Post</span>
             </div>
+              <hr />
             <div>
-              {printMyPost()}
+            {
+            myPost == true ?
+              printMyPost()
+            :
+              printLikePost()
+            }
             </div>
           </div>
           {/* </div>

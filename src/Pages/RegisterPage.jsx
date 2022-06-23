@@ -3,12 +3,12 @@ import React from "react";
 import { API_URL } from "../helper";
 import { Button, FormGroup, Input, Label, InputGroupText, InputGroup } from "reactstrap";
 import { useDispatch } from 'react-redux'
-import { getUsersAction } from "../redux/action/usersAction";
+import { registerUser } from "../redux/action/usersAction";
 import { loginAction } from "../redux/action/usersAction";
 import { useNavigate } from "react-router-dom";
 import vectorRegister from "../assets/new/vectorRegister.png"
 import "../style/registerPage.css"
-import { getUsernamesAction } from '../redux/action/usernameAction'
+import { getPostings } from "../redux/action/postingsAction";
 import { FaUserCircle } from "react-icons/fa"
 // import { FaUserCircle } from "@react-icons/all-files/fa/FaUserCircle";
 
@@ -83,62 +83,33 @@ const RegisterPage=()=>{
     } else {
       setPasswordLength(false)
     }
-    console.log("cek password.length",inForm.password.length)
-    console.log(inForm.password)
+    // console.log("cek password.length",inForm.password.length)
+    // console.log(inForm.password)
   }
   
   const handleRegister =async()=>{
     try {
-      let filterQuery = `?`;
-      let filterQueryEmail = `?`;
       checkStrongPassword();
       if (username=="" || email=="" || password=="" || confPassword==""){
         alert("Fill in all form")
-        console.log(username, email, password, confPassword)
-      // } else if(passwordLength== false || isUpperCase==false ||
-      //           containsNumbers==false || containsSymbols==false){
-      //             alert("Weak password")
+        // console.log(username, email, password, confPassword)
       } else{
         if (password!=confPassword){
           alert("Password not match")
         } else if(email.includes("@")){
-          filterQuery +=`username_like=${username}`
-          let response = await Axios.get(`${API_URL}/users${filterQuery}`)
-            if(response.data < 1){
-              filterQueryEmail += `email_like=${email}`
-              let responseEmail = await Axios.get(`${API_URL}/users${filterQueryEmail}`)
-              if(responseEmail.data < 1){
-                // navigate("/")
-                alert('registration success')
-                let res = await Axios.post(`${API_URL}/users`, {
-                  username,
-                  email,
-                  password,
-                  fullname:"",
-                  bio:"",
-                  profilepict:"https://sman11tangerangselatan.sch.id/images/user-u.jpg"
-                })
-                dispatch(loginAction(res.data))
-                navigate("/")
-              } else {
-                alert("email not available")
-              }
-            } else {
-              alert("username not available")
-            }
-          // console.log("Respon Resgiter", res.data)
-          // dispatch(getUsersAction(res.data))
-          // Auto Login ketika register berhasil
-          // setSelectedIdx(!selectedIdx)
-          console.log("tes selectedIdx",selectedIdx)
-        } else {
-          alert("Email Wrong")
-        }
+          let a = username;
+          let b = email;
+          let c = password;
+          let regisUser = registerUser(a, b, c);
+          dispatch(regisUser)
+          navigate("/home")
+      } else {
+        alert("Email Wrong")
       }
-      
-    } catch (error) {
-      console.log(error)
-    }
+    }    
+  } catch (error) {
+    console.log(error)
+  }
   }
   
   const checkStrongPassword =()=>{
@@ -149,7 +120,7 @@ const RegisterPage=()=>{
 }
 
   const checkUpperCase=()=>{
-    console.log("cek uppercase", isUpperCase)
+    // console.log("cek uppercase", isUpperCase)
     if (inForm.password.match(/^(?=.*[A-Z])/)){
       setIsUpperCase(true)
     } else {
@@ -158,7 +129,7 @@ const RegisterPage=()=>{
   }
   
   const checkNumbers=()=>{
-    console.log("cek number", containsNumbers)
+    // console.log("cek number", containsNumbers)
     if (inForm.password.match(/\d+/g)){
       setContainsNumbers(true)
     } else {
@@ -167,7 +138,7 @@ const RegisterPage=()=>{
   }
 
   const checkSymbols=()=>{
-    console.log("cek symbol", containsSymbols)
+    // console.log("cek symbol", containsSymbols)
     if (inForm.password.match(/[ `!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?~]/)){
       setContainsSymbols(true)
     } else {

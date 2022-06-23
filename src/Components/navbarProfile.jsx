@@ -32,9 +32,9 @@ const NavbarComponentProfile = (props) => {
         }
     })
 
-    console.log("dropOpen", dropOpen)
-    console.log("profilepict", profilepict)
-    console.log("show navbar", show)
+    // console.log("dropOpen", dropOpen)
+    // console.log("profilepict", profilepict)
+    // console.log("show navbar", show)
     return (
         <>
             <div className="gradientNavbar">

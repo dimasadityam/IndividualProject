@@ -30,8 +30,8 @@ const NavbarComponent = (props) =>{
         }
       })
 
-      console.log("profilepict", profilepict)
-    console.log("show navbar",show)
+    //   console.log("profilepict", profilepict)
+    // console.log("show navbar",show)
     return(
         <>
         <div className="gradientNavbar">

@@ -16,6 +16,7 @@ import ReactDOM from "react-dom"
 import {CSSTransition} from "react-transition-group"
 import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io"
 import { GoKebabHorizontal } from "react-icons/go"
+import { getLikePostings, getFilterPostings } from "../redux/action/postingsAction";
 
 
 const ModalDetail = (props) => {
@@ -28,13 +29,20 @@ const ModalDetail = (props) => {
   const [editPost, setEditPost]=React.useState(false);
   const [dropOpen, setDropOpen] = React.useState(false)
 
-  const { username, profilepict, postings }=useSelector((state)=>{
+  const { likeposts, username, profilepict, postings }=useSelector((state)=>{
     return{
+      likeposts:state.postingsReducer.likeposts,
       username:state.usersReducer.username,
       profilepict:state.usersReducer.profilepict,
       postings:state.postingsReducer.postings
     }
 })
+
+React.useEffect(()=>{
+  dispatch(getFilterPostings());
+  dispatch(getLikePostings());
+  // dispatch(getUsers());
+}, [])
 
   const closeOnEscapeKeyDown = e => {
     if ((e.charCode || e.keyCode) === 27) {
@@ -74,6 +82,16 @@ const ModalDetail = (props) => {
         type: "password",
         text: "Show"
       })
+    }
+  }
+
+  const handleSaveEdit = async () =>{
+    try {
+      let res = await Axios.post(`${API_URL}/users/`, {
+        
+      })
+    } catch (error) {
+      console.log(error)
     }
   }
 
@@ -137,15 +155,15 @@ const ModalDetail = (props) => {
   }
 
   // console.log("props",props)
-  // console.log("props.data",props.data)
+  // console.log("props.data",props)
   // console.log("thumbnail", thumbnail)
   // return postings.map((value,index)=>{
   //   // console.log("value id",value.id, value.username, username, index)
   //   if (value.username == username){
-  const printPostingModal=()=>{
-    return postings.map((value,index)=>{
-      console.log("props.data", props.data, "==", value.idPosting)
-    if (value.idPosting == props.data.toString()){
+  const printLikepostModal=()=>{
+    return likeposts.map((value,index)=>{
+      console.log("likepost",value.idposting == props.data)
+    if (value.idposting == props.data.toString()){
       return <div style={{paddingLeft:"100px"}}>
         <div className="cardNew">
           {
@@ -209,7 +227,7 @@ const ModalDetail = (props) => {
             <div className="cNHeader row">
               <div className="col-md-10">
                 <img src={profilepict} style={{width:"3%", borderRadius:"50%"}} alt="profile picture"
-                  key={value.idPosting} onClick={() => setThumbnail(value.idPosting)}/>
+                  key={value.idposting} onClick={() => setThumbnail(value.idposting)}/>
                 <span className="text" style={{color:"black"}}>{value.username}</span>
               </div>
               <div className="col-md-1">
@@ -258,8 +276,140 @@ const ModalDetail = (props) => {
       }
     })
   }
+  const printMypostModal=()=>{
+    return postings.map((value,index)=>{
+      console.log("mypost", value.idposting == props.data)
+    if (value.idposting == props.data.toString()){
+      return <div style={{paddingLeft:"100px"}}>
+        <div className="cardNew">
+          {
+            editPost == false ?
+          <>
+            <div className="cNHeader row">
+              <div className="col-md-10">
+                <img src={profilepict} style={{width:"3%", borderRadius:"50%"}} alt="profile picture"
+                  key={value.idPosting} onClick={() => setThumbnail(value.idPosting)}/>
+                <span className="text" style={{color:"black"}}>{value.username}</span>
+              </div>
+              <div className="col-md-1">
+                <GoKebabHorizontal size={20} style={{color:"#1f2531", marginLeft:"150px", cursor:"pointer"}} onClick={()=> setDropOpen(!dropOpen)} />
+                <Dropdown isOpen={dropOpen} toggle={() => setDropOpen(!dropOpen)}>
+                    <DropdownToggle data-toggle="dropdown" tag="span">
+                      <DropdownMenu>
+                        <DropdownItem>
+                            <span onClick={() => setEditPost(!editPost)}>Edit Posting</span>
+                        </DropdownItem>
+                        <DropdownItem divider/>
+                        <DropdownItem>
+                        <span onClick={() => setDropOpen(!dropOpen)}>Delete Posting</span>
+                        </DropdownItem>
+                      </DropdownMenu>
+                    </DropdownToggle>
+                </Dropdown>
+              </div>
+          </div>
+          <div className="cNBody row">
+          <div className="col-md-5 pb-4">
+            <img className="pictPost" style={{cursor:"pointer"}} src={value.src}
+                onDoubleClick={()=> setLikePost(!likePost)} alt="posting user" />
+          </div>
+          <div className="col-md-7 position-relative">
+            <div className="row">
+              <div className="col-md-1 text-center">
+                <>
+                  {
+                    likePost == false ?
+                    <IoMdHeartEmpty className="mt-1" size={30} style={{color:"#2C987A"}}/>
+                    :
+                    <IoMdHeart className="mt-1" size={30} style={{color:"#2C987A"}}/>
+                  }
+                </>
+                <span className="text fw-bold" style={{fontSize:"9px", color:"#2C987A"}}>{value.nuberLikes} Likes</span>
+              </div>
+              <div className="col-md-11">
+              <span className="text" style={{color:"black"}}>{value.username} </span>
+              <span className="text-thin fw-bold" style={{color:"black"}}>{value.caption}</span>
+              <div className="textDate mt-3">{value.createDate}</div>
+              </div>
+            </div>
+            <div className="cNFooter" >
+              <Input className="shadow-input" placeholder="Tambahkan Komentar..."/>
+            </div>
+          </div>
+        </div>
+          </>
+          :
+          <>
+            <div className="cNHeader row">
+              <div className="col-md-10">
+                <img src={profilepict} style={{width:"3%", borderRadius:"50%"}} alt="profile picture"
+                  key={value.idposting} onClick={() => setThumbnail(value.idposting)}/>
+                <span className="text" style={{color:"black"}}>{value.username}</span>
+              </div>
+              <div className="col-md-1">
+                <div className="btn-group">
+              <Button className="btn-color-modal mt-3" onClick={()=> setEditPost(!editPost)} type="button"
+                style={{fontFamily:"Lexend"}}>Save</Button>
+              <Button className="btn-color-modal-cancel mt-3" onClick={()=> setEditPost(!editPost)} type="button"
+                style={{fontFamily:"Lexend"}}>Cancel</Button>
+                </div>
+                {/* <GoKebabHorizontal size={20} style={{color:"#1f2531", marginLeft:"1450px", cursor:"pointer"}} onClick={()=> setEditPost(!editPost)} /> */}
+              </div>
+          </div>
+          <div className="cNBody row">
+          <div className="col-md-5 pb-4">
+            <img className="pictPost" style={{cursor:"pointer"}} src={value.src}
+                onDoubleClick={()=> setLikePost(!likePost)} alt="posting user" />
+          </div>
+          <div className="col-md-7 position-relative">
+            <div className="row">
+              <div className="col-md-1 text-center">
+                <>
+                  {
+                    likePost == false ?
+                    <IoMdHeartEmpty className="mt-1" size={30} style={{color:"#2C987A"}}/>
+                    :
+                    <IoMdHeart className="mt-1" size={30} style={{color:"#2C987A"}}/>
+                  }
+                </>
+                <span className="text fw-bold" style={{fontSize:"9px", color:"#2C987A"}}>{value.nuberLikes} Likes</span>
+              </div>
+              <div className="col-md-11">
+              <span className="text" style={{color:"black"}}>{value.username} </span>
+              <Input size={90} type="text" className="text-thin fw-bold" style={{color:"black"}} defaultValue={value.caption}/>
+              <div className="textDate mt-3">{value.createDate}</div>
+              </div>
+            </div>
+            <div className="cNFooter" >
+              <Input className="shadow-input" placeholder="Tambahkan Komentar..."/>
+            </div>
+          </div>
+        </div>
+          </>
+        }
+        </div> 
+      </div> 
+      }
+    })
+  }
+  
+  // const printModal = () => {
+  //   return postings.map((val,idx)=>{
+  //     console.log('VALL', val)
+  //     console.log("val",val.idposting, "==", props.data)
+  //     if(val.idposting == props.data) {
+  //       return printMypostModal()
+  //     } else if(val.idposting !== props.data) {
+  //       return likeposts.map((valLike, idxLike)=>{
+  //         if(valLike.idposting == props.data){
+  //           return printLikepostModal()
+  //         }
+  //       })
+  //     }
+  //   })
+  // }
 
-  console.log(inForm.email, inForm.password)
+  // console.log(inForm.email, inForm.password)
   return ReactDOM.createPortal (
     <CSSTransition
       in={props.show}
@@ -267,8 +417,15 @@ const ModalDetail = (props) => {
       timeout={{ enter: 0, exit:300 }}
     >
     <div className="modal" onDoubleClick={props.onClose}>
-      {/* {renderImages} */}
-      {printPostingModal()}
+      {printMypostModal()}
+      {printLikepostModal()}
+      {/* {printModal()} */}
+    {/* {
+    props.data ?
+        // printMyPost()
+      :
+          // printLikePost()
+    } */}
     </div>
     </CSSTransition>,
     document.getElementById("root")

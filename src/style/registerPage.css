@@ -11,6 +11,27 @@
   padding-top: 65%;
 }
 
+.vectorForgot{
+  background: url(../assets/new/VectorForgot2.png);
+  background-size:100%;
+  margin-top: 10%;
+  /* padding-top: 30%; */
+}
+.vectorReset{
+  background: url(../assets/new/VectorReset.png);
+  background-size:100%;
+  margin-top: 5%;
+  /* margin-top: 10%; */
+  /* padding-top: 30%; */
+}
+
+.vectorCheckEmail{
+  background: url(../assets/new/vectorCheckEmail.png);
+  background-size:100%;
+  margin-top: 10%;
+  /* padding-top: 30%; */
+}
+
 .shadow-input{
   filter: drop-shadow(3px 3px 5px rgba(61, 61, 61, 0.13))
 }
@@ -38,6 +59,11 @@
 .label-register{
   font-family: Lexend;
   font-size: 100%;
+  color: rgb(31, 37, 49);
+}
+.label-register2{
+  font-family: Lexend;
+  font-size: 85%;
   color: rgb(31, 37, 49);
 }
 
@@ -78,7 +104,12 @@
     margin-top: 5%;
     padding-top: 65%;
   }
-
+  .vectorForgot{
+    background: url(../assets/new/VectorForgot2-sm.png);
+    background-size:100%;
+    margin-top: 10%;
+    /* padding-top: 30%; */
+  }
   .MT20{
     margin-top: 20%;
   }

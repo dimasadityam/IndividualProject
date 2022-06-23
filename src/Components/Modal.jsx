@@ -66,39 +66,60 @@ const ModalNew = (props) => {
     if(inForm.email== "" || inForm.password== ""){
       alert("Fill in all form")
     } else {
-      console.log("inForm username", inForm.username)
+      // console.log("inForm username", inForm.username)
       if(inForm.email.includes("@")){
-        Axios.get(`${API_URL}/users?email=${inForm.email}&password=${inForm.password}`)
-        .then((response)=>{
-          localStorage.setItem("tokenIdUser", response.data[0].idUser)
-          dispatch(loginAction(response.data[0]))
-          // dispatch(loginUser(response.data[0]))
-          console.log("res data login email",response.data[0])
-          if(response.data[0] == undefined) {
-            alert("user unregistered, please register first")
-          } else {
-            // alert("login success")
-            navigate("/home")
-          }
-        }).catch((error)=>{
-          console.log(error)
-        })
-      } else if (inForm.email){
-        Axios.get(`${API_URL}/users?username=${inForm.email}&password=${inForm.password}`)
-        .then((response)=>{
-          localStorage.setItem("tokenIdUser", response.data[0].idUser)
-          dispatch(loginAction(response.data[0]))
-          // dispatch(loginUser(response.data[0]))
-          console.log("res data login username",response.data[0])
-            if(response.data[0] == undefined) {
-              alert("user unregistered, please register first")
-            } else {
-              // alert("login success")
-              navigate("/home")
-            }
-          }).catch((error)=>{
-            console.log(error)
-          })
+        // try {
+        //   let response = await Axios.post(`${API_URL}/users/login`, {
+        //     email: inForm.email,
+        //     password: inForm.password
+        //   })
+        //   console.log("response",response.data)
+        //   if (response.data.token) {
+        //     console.log("response.data.token", response.data.token)
+        //     localStorage.setItem("tokenIdUser", response.data.token)
+        //     dispatch(loginAction(response.data))
+        //     navigate("/home")
+        //   } else {
+        //     alert("user unregistered, please register first")
+        //   }
+        // } catch (error) {
+        //   console.log(error)
+        // }
+        let a = inForm.email
+        let b = inForm.password
+        let loginUsers = loginUser(a, b)
+        dispatch(loginUsers)
+        navigate("/home")
+      //   Axios.get(`${API_URL}/users?email=${inForm.email}&password=${inForm.password}`)
+      //   .then((response)=>{
+      //     localStorage.setItem("tokenIdUser", response.data[0].idUser)
+      //     dispatch(loginAction(response.data[0]))
+      //     // dispatch(loginUser(response.data[0]))
+      //     console.log("res data login email",response.data[0])
+      //     if(response.data[0] == undefined) {
+      //       alert("user unregistered, please register first")
+      //     } else {
+      //       // alert("login success")
+      //     }
+      //   }).catch((error)=>{
+      //     console.log(error)
+      //   })
+      // } else if (inForm.email){
+      //   Axios.get(`${API_URL}/users?username=${inForm.email}&password=${inForm.password}`)
+      //   .then((response)=>{
+      //     localStorage.setItem("tokenIdUser", response.data[0].idUser)
+      //     dispatch(loginAction(response.data[0]))
+      //     // dispatch(loginUser(response.data[0]))
+      //     console.log("res data login username",response.data[0])
+      //       if(response.data[0] == undefined) {
+      //         alert("user unregistered, please register first")
+      //       } else {
+      //         // alert("login success")
+      //         navigate("/home")
+      //       }
+      //     }).catch((error)=>{
+      //       console.log(error)
+      //     })
       } else {
         alert("username or email wrong")
       }
@@ -144,7 +165,7 @@ const ModalNew = (props) => {
                         </InputGroupText>
                     </InputGroup>
                     <div className='d-flex justify-content-end'>
-                        <a className='btn p-0 modal-forgot'>Forgot password ?</a>
+                        <a href='http://localhost:3000/forgot' className='btn p-0 modal-forgot'>Forgot password ?</a>
                     </div>
                 </FormGroup>
                 <Button type='button' className='w-100 mt-4 mb-3 modal-btn'

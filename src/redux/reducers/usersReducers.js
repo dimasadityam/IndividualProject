@@ -9,6 +9,10 @@ export const usersReducer = (state = INITIAL_STATE, action) => {
       console.log("Data loginAction userReducers", action.payload)
       return { ...state, ...action.payload };
 
+    case "FORGOT_SUCCESS":
+      console.log("DATA FORGOT ACTION users reducers", action.payload)
+      return { ...state, ...action.payload };
+
     case "GET_USERS":
       console.log("Data Dari Action", action.payload)
       return { ...state, users: action.payload };

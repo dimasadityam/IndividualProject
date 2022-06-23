@@ -5,7 +5,7 @@ import NavbarComponent from "../Components/navbar";
 import NavbarComponentProfile from "../Components/navbarProfile";
 import { useDispatch, useSelector } from 'react-redux'
 import { Button, Input } from "reactstrap";
-import { updateProfileAction, loginAction } from "../redux/action/usersAction";
+import { updateProfileAction, loginAction, editUser } from "../redux/action/usersAction";
 import "../style/editProfilePage.css"
 
 const EditProfile = () => {
@@ -22,40 +22,46 @@ const EditProfile = () => {
     }
   })
 
-  const [usernameProfile, setUsernameProfile]=React.useState(username)
-  const [fullnameProfile, setFullnameProfile]=React.useState(fullname)
-  const [bioProfile, setBioProfile]=React.useState(bio)
-  const [emailProfile, setEmailProfile]=React.useState(email)
+  const [usernameProfile, setUsernameProfile]=React.useState("")
+  const [fullnameProfile, setFullnameProfile]=React.useState("")
+  const [bioProfile, setBioProfile]=React.useState("")
+  // const [emailProfile, setEmailProfile]=React.useState(email)
 
-  console.log(usernameProfile, fullnameProfile, bioProfile, emailProfile)
+  console.log(usernameProfile, fullnameProfile, bioProfile)
 
   const handleEditProfile=async()=>{
     try {
-      let filterQuery = `?`
-      filterQuery+=`username_like=${username}`
-      let responseUser = await Axios.get(`${API_URL}/users${filterQuery}`)
-      if (responseUser.data < 1){
-        console.log("RESPONSE USER DATA", responseUser.data)
-        alert("responseUser.data < 1")
-        setUsernameProfile(username)
-        setFullnameProfile(fullname)
-        setBioProfile(bio)
-        setEmailProfile(email)
+      // let filterQuery = `?`
+      // filterQuery+=`username_like=${username}`
+      // let responseUser = await Axios.get(`${API_URL}/users${filterQuery}`)
+      // if (responseUser.data < 1){
+      //   console.log("RESPONSE USER DATA", responseUser.data)
+      //   alert("responseUser.data < 1")
+      //   setUsernameProfile(username)
+      //   setFullnameProfile(fullname)
+      //   setBioProfile(bio)
 
-        // console.log("usernameP", usernameProfile, "fullnameP", fullnameProfile, "bioP", bioProfile, "emailP", emailProfile)
-        if(usernameProfile=="" || emailProfile==""){
-          alert("fill username and email")
+        console.log(usernameProfile, fullnameProfile, bioProfile, "username", username)
+        if(usernameProfile =="" || fullnameProfile =="" || bioProfile ==""){
+          let a = usernameProfile;
+          let b = fullnameProfile;
+          let c = bioProfile;
+          let d = username;
+          let e = fullname;
+          let f = bio;
+
+          let editUsers = editUser(a, b, c, d, e, f)
+          dispatch(editUsers)
         } else {
-          let res = await Axios.patch(`${API_URL}/users/2`, {
-            username: usernameProfile,
-            email: emailProfile,
-            fullname: fullnameProfile,
-            bio: bioProfile
-          })
-          console.log("cek res patch profile",res.data)
-          dispatch(loginAction(res.data))
+          let a = usernameProfile;
+          let b = fullnameProfile;
+          let c = bioProfile
+          let editUsers = editUser(a, b, c)
+          dispatch(editUsers)
+          // console.log("cek res patch profile",res.data)
+          // dispatch(loginAction(res.data))
           // alert("username not available")
-        }
+        // }
       }
     } catch (error) {
       console.log(error)
@@ -106,7 +112,7 @@ const EditProfile = () => {
                   onChange={(e)=>setBioProfile(e.target.value)} />
               </div>
             </div>
-            <div className="col-md-2 mt-3">
+            {/* <div className="col-md-2 mt-3">
               <span>Email</span>
             </div>
             <div className="col-md-1 mt-3">
@@ -117,7 +123,7 @@ const EditProfile = () => {
               <Input type="text" className="text-input" defaultValue={value.email}
                   onChange={(e)=>setEmailProfile(e.target.value)} />
               </div>
-            </div>
+            </div> */}
           </div>
           <div className="text-center mt-3 pb-2">
             <Button href="/profile" onClick={handleEditProfile} className="btn-color-save textBtn">Save</Button> 
@@ -134,6 +140,20 @@ const EditProfile = () => {
       <div className="container">
         {printUsers()}
       </div>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
     </div>
   )
 }
