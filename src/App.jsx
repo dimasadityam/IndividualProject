@@ -14,7 +14,7 @@ import Axios from 'axios';
 import { API_URL } from './helper';
 import { getPostingsAction } from './redux/action/postingsAction';
 import { loginAction, getUsers, keepLogin } from "./redux/action/usersAction"
-import EditProfilePage from './Pages/EditProfilePage';
+import EditProfilePage from './Pages/editProfilePage';
 import ForgotPasswordPage from './Pages/ForgotPassword';
 import VerificationPage from './Pages/VerificationPage';
 import CheckEmailPage from './Pages/CheckEmailPage';
