@@ -140,6 +140,7 @@ export const loginUser = (inFormEmail, inFormPassword) => {
         dispatch(getUsers())
       }
     } catch (error) {
+      // alert("login error")
       console.log(error)
     }
   }

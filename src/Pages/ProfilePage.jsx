@@ -53,19 +53,19 @@ const ProfilePage=()=>{
   //   setTimeout(()=> setShowModalDetail(!showModalDetail), 3500)
   // }
   
-  console.log("cek postings",postings)
-  console.log("cek likeposts",likeposts)
-  console.log("cek dataID",dataID)
+  // console.log("cek postings",postings)
+  // console.log("cek likeposts",likeposts)
+  // console.log("cek dataID",dataID)
   const printMyPost=()=>{
   return postings.map((value,index) =>{
-    return <img className="pictMyPost" src={value.src} alt="my posting"
+    return <img className="pictMyPost" src={value.src} alt="my posting" style={{width:"250px", marginLeft:"20px", marginRight:"20px"}}
             onClick={() => {(setShow(!show)); (setDataID(value.idposting))}}
             />
   })
 }
   const printLikePost=()=>{
   return likeposts.map((value,index) =>{
-    return <img className="pictMyPost" src={value.src} alt="my like posting"
+    return <img className="pictMyPost" src={value.src} alt="my like posting" style={{width:"250px", marginLeft:"20px", marginRight:"20px"}}
             onClick={() => {(setShow(!show)); (setDataID(value.idposting))}}
             />
   })
@@ -192,7 +192,7 @@ const printUsers=()=>{
             fullname: fullnameProfile,
             bio: bioProfile
           })
-          console.log("cek res patch profile",res.data)
+          // console.log("cek res patch profile",res.data)
           dispatch(loginAction(res.data))
           // alert("username not available")
         }
@@ -227,7 +227,7 @@ const printUsers=()=>{
                 onClick={()=> {(setLikesPost(true)); (setMyPost(false))}}>My Like Post</span>
             </div>
               <hr />
-            <div>
+            <div className="text-center">
             {
             myPost == true ?
               printMyPost()

@@ -64,6 +64,39 @@
   border-radius: 5px;
   /* filter: drop-shadow(3px 3px 7px rgba(34, 34, 34, 0.329)); */
 }
+.btn-color-upload{
+  background-color: #eef5f4;
+  /* background-color: #eef5f4; */
+  color: #2A9377;
+  border-radius: 5px;
+  border-color: #2A9377;
+  width: 80px;
+  /* filter: drop-shadow(3px 3px 7px rgba(34, 34, 34, 0.329)); */
+}
+
+.btn-color-upload:hover{
+  background-color: #2A9377;
+  color: #ffffff;
+  border-radius: 5px;
+  /* filter: drop-shadow(3px 3px 7px rgba(34, 34, 34, 0.329)); */
+}
+
+.btn-color-cancel-post{
+  background-color: #77232d;
+  /* background-color: #eef5f4; */
+  color: #eef5f4;
+  border-radius: 5px;
+  border-color: #2A9377;
+  width: 80px;
+  /* filter: drop-shadow(3px 3px 7px rgba(34, 34, 34, 0.329)); */
+}
+
+.btn-color-cancel-post:hover{
+  background-color: #c13a4a;
+  color: #ffffff;
+  border-radius: 5px;
+  /* filter: drop-shadow(3px 3px 7px rgba(34, 34, 34, 0.329)); */
+}
 
 hr {
   display: block;

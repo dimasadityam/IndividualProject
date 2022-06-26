@@ -49,7 +49,7 @@ const HomePage=(props)=>{
   };
 
   function handleChange(e) {
-    console.log("targetFiles", e.target.files);
+    // console.log("targetFiles", e.target.files);
     setFile(URL.createObjectURL(e.target.files[0]))
   }
 
@@ -73,17 +73,17 @@ const printPosting=()=>{
       // console.log(value.iduser == users[index].iduser)
       return <div className="cardNew">
           <div className="cNHeader">
-            <img src={profilepict} style={{width:"3%", borderRadius:"50%"}}
+            <img src={profilepict} style={{width:"40px", borderRadius:"50%", marginLeft:"12px"}}
               alt="profile picture"
             />
               <span className="text" style={{color:"black"}}>
                 {value.username}
               </span>
           </div>
-          <div className="cNBody row">
+          <div className="cNBody pt-1 row">
             {/* <span style={{color:"black"}}>tester</span> */}
           <div className="col-md-4 pb-4">
-            <img className="pictPost" style={{cursor:"pointer"}} src={value.src}
+            <img className="pictPost" style={{cursor:"pointer", marginLeft:"12px", width:"320px"}} src={value.src}
                 onDoubleClick={()=> setLikePost(!likePost)} alt="posting user" />
           </div>
           {/* <div className="col-md-1 text-center">
@@ -124,11 +124,11 @@ const printPosting=()=>{
     let temp = [...imgPosting]
     temp.push("")
     setImgPosting(temp)
-    console.log(imgPosting)
+    // console.log(imgPosting)
   }
 
   const handleImgPosting = (e, index) => {
-    console.log("e",e, "e.target.files", e.target.files);
+    // console.log("e",e, "e.target.files", e.target.files);
     let temp = [...imgPosting]
     temp[index] = e.target.files[0]
     setImgPosting(temp)
@@ -142,7 +142,7 @@ const printPosting=()=>{
   setFile()
 }
 
-const handleFileUpload = (e) => {
+const handleFileUpload = (e, index) => {
   // const { files } = e.target;
   // if (files && files.length) {
   //   const filename = files[0].name;
@@ -151,18 +151,26 @@ const handleFileUpload = (e) => {
   //   const fileType = parts[parts.length - 1];
   //   console.log("fileType", fileType); //ex: zip, rar, jpg, svg etc.
 
-    setImgPosting(e.target.files[0]);
+    // let temp = [...imgPosting]
+    // temp = [e.target.files[0]]
+    // setImgPosting(temp)
+    setImgPosting([e.target.files[0]]);
     setFile(URL.createObjectURL(e.target.files[0]))
   // }
 };
 
-console.log("previewPost", previewPost)
+// console.log("previewPost", previewPost)
 const onButtonClick = () => {
   inputFile.current.click();
-  setPreviewPost(!previewPost)
+  setPreviewPost(!previewPost);
+};
+const cancelPost = () => {
+  setFile(null);
+  setPreviewPost(!previewPost);
 };
 
-console.log("idusersLogin", users)
+// console.log("idusersLogin", users)
+// console.log("imgPosting", imgPosting)
 const handleSubmit = async()=>{
   try {
     let iduserLogin = users[0].iduser
@@ -172,7 +180,7 @@ const handleSubmit = async()=>{
         iduserLogin
         
       }
-      console.log('data', data)
+      // console.log('data', data)
       // menambahkan data kedalam formData yang harus pake JSON.stringify
       formData.append('data', JSON.stringify(data));
 
@@ -180,8 +188,10 @@ const handleSubmit = async()=>{
       imgPosting.forEach(val=>formData.append('imgPosting', val));
       let resPosting = await Axios.post(`${API_URL}/postings/`, formData)
       // let a = formData
-      console.log("resPosting", resPosting.data)
+      // console.log("resPosting", resPosting.data)
       dispatch(getPostings())
+      setFile(null);
+      setPreviewPost(!previewPost);
       // navigate("/home")
     }
   catch (error) {
@@ -189,8 +199,8 @@ const handleSubmit = async()=>{
   }
 }
 
-console.log("cek imgPosting",imgPosting)
-console.log("cek file",file)
+// console.log("cek imgPosting",imgPosting)
+// console.log("cek file",file)
 
   const printImgPosting = () => {
     if (imgPosting.length > 0) {
@@ -223,98 +233,87 @@ console.log("cek file",file)
                   <FormGroup>
                   </FormGroup>
                 {/* </div> */}
-                {
-                  previewPost == true ?
                   <div className="cNBody pt-3 row">
                     {/* <InputGroup> */}
+                      <input
+                        style={{ display: "none" }}
+                        // accept=".zip,.rar"
+                        ref={inputFile}
+                        onChange={(e)=> handleFileUpload (e)}
+                        type="file"
+                      />
                     <div className="col-1">
                         <img src={profilepict} style={{width:"40px", borderRadius:"50%"}}
                           alt="profile picture"
                         />
                     </div>
-                    <div className="col-2">
-                      <img style={{height:"300px", borderRadius:"5%"}} src={file}/>
-                    </div>
-                    <div className="col-9">
-                      <Input className="ms-3" type="text" placeholder="What's Happening"
-                        onChange={(e)=>setCaption(e.target.value)} style={{backgroundColor:"#dadfde"}}/>
-                      <div className="row">
-                        <div className="col-8">
-                          <InputGroup>
-                            {/* <ImageUpload /> */}
-                            <input
-                              style={{ display: "none" }}
-                              // accept=".zip,.rar"
-                              ref={inputFile}
-                              onChange={(e)=> handleFileUpload (e)}
-                              type="file"
-                            />
-                            <IoImageOutline style={{color:"#2C9779", marginLeft:"50px",
-                              marginTop:"10px", cursor:"pointer"}} size={27}
-                              // onClick={onBtAddImgPosting}
-                              onClick={onButtonClick}
-                            />
-                            <Label className="label-register2 mt-3 ms-1" style={{color:"#1b8768"}}>Photo</Label>
-                          </InputGroup>
-                        </div>
-                        <div className="col-4">
-                          <Button style={{marginLeft:"130px", marginTop:"8px"}} className="btn-color-save textBtn"
-                            onClick={handleSubmit}
-                            >Upload</Button>
-                          <div style={{marginLeft:"82px"}}>
+                    {
+                      previewPost == true ?
+                    <>
+                      <div className="col-2">
+                        <img style={{height:"300px", borderRadius:"5%"}} src={file}/>
+                      </div>
+                      <div className="col-8">
+                        <Input className="ms-5" type="text" placeholder="What's Happening"
+                          onChange={(e)=>setCaption(e.target.value)} style={{backgroundColor:"#dadfde"}}/>
+                        <div className="row">
+                          <div className="col-8">
+                            <InputGroup className="ms-2">
+                              {/* <ImageUpload /> */}
+                              <IoImageOutline style={{color:"#2C9779", marginLeft:"50px",
+                                marginTop:"10px", cursor:"pointer"}} size={27}
+                                // onClick={onBtAddImgPosting}
+                                onClick={onButtonClick}
+                              />
+                              <Label className="label-register2 mt-3 ms-1" style={{color:"#1b8768"}}>Photo</Label>
+                            </InputGroup>
+                          </div>
+                          <div className="col-4">
                             {
-                              printImgPosting()
+                              previewPost == true ?
+                              <>
+                                <Button style={{marginLeft:"40px", marginTop:"8px"}} className="btn-color-upload textBtn"
+                                  onClick={handleSubmit}
+                                  >Upload
+                                </Button>
+                                <Button className="btn-color-cancel-post textBtn ms-2 mt-2"
+                                  onClick={cancelPost}>Cancel
+                                </Button>
+                              </>
+                              :
+                              null
                             }
+                            {/* <div style={{marginLeft:"82px"}}>
+                              {
+                                printImgPosting()
+                              }
+                            </div> */}
                           </div>
                         </div>
                       </div>
+                    </>
+                    :
+                      <div className="col-11">
+                        <Input className="ms-3" type="text" placeholder="What's Happening"
+                          onChange={(e)=>setCaption(e.target.value)} style={{backgroundColor:"#dadfde"}}/>
+                            <InputGroup>
+                              {/* <ImageUpload /> */}
+                              <IoImageOutline style={{color:"#2C9779", marginLeft:"50px",
+                                marginTop:"10px", cursor:"pointer"}} size={27}
+                                // onClick={onBtAddImgPosting}
+                                onClick={onButtonClick}
+                              />
+                              <Label className="label-register2 mt-3 ms-1" style={{color:"#1b8768"}}>Photo</Label>
+                            </InputGroup>
+                      </div>
+                    }
+                    <div className="col-1">
+
                     </div>
                   </div>
-                  :
-                <div className="cNBody pt-3 row">
-                  {/* <InputGroup> */}
-                  <div className="col-1">
-                      <img src={profilepict} style={{width:"40px", borderRadius:"50%"}}
-                        alt="profile picture"
-                      />
-                  </div>
-                  <div className="col-11">
-                    <Input className="ms-3" type="text" placeholder="What's Happening"
-                      onChange={(e)=>setCaption(e.target.value)} style={{backgroundColor:"#dadfde"}}/>
-                    <div className="row">
-                      <div className="col-8">
-                        <InputGroup>
-                          {/* <ImageUpload /> */}
-                          <input
-                            style={{ display: "none" }}
-                            // accept=".zip,.rar"
-                            ref={inputFile}
-                            onChange={(e)=> handleFileUpload (e)}
-                            type="file"
-                          />
-                          <IoImageOutline style={{color:"#2C9779", marginLeft:"50px",
-                            marginTop:"10px", cursor:"pointer"}} size={27}
-                            // onClick={onBtAddImgPosting}
-                            onClick={onButtonClick}
-                          />
-                          <Label className="label-register2 mt-3 ms-1" style={{color:"#1b8768"}}>Photo</Label>
-                        </InputGroup>
-                      </div>
-                      <div className="col-4">
-                        <Button style={{marginLeft:"130px", marginTop:"8px"}} className="btn-color-save textBtn"
-                          onClick={handleSubmit}
-                          >Upload</Button>
-                        <div style={{marginLeft:"82px"}}>
-                          {
-                            printImgPosting()
-                          }
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                }
-                  {/* </InputGroup> */}
+
+
+
               </div>
             </div>
             <div className="pt-3">

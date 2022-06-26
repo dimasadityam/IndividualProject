@@ -67,7 +67,7 @@ const ModalNew = (props) => {
       alert("Fill in all form")
     } else {
       // console.log("inForm username", inForm.username)
-      if(inForm.email.includes("@")){
+      if(inForm.email){
         // try {
         //   let response = await Axios.post(`${API_URL}/users/login`, {
         //     email: inForm.email,
@@ -133,7 +133,7 @@ const ModalNew = (props) => {
       unmountOnExit
       timeout={{ enter: 0, exit:300 }}
     >
-    <div className="modal row" onClick={props.onClose}>
+    <div className="modal row" onDoubleClick={props.onClose}>
       <div className="col-md-8 col-sm-12">
         <div className="text-center">
           <h1 className="modal-hello">Hello!</h1>

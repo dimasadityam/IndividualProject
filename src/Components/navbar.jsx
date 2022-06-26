@@ -58,7 +58,7 @@ const NavbarComponent = (props) =>{
                                 // className="d-flex justify-content-end"
                                 navbar
                                 >
-                                    <img src={profilepict} style={{width:"15%", borderRadius:"50%"}} alt="profile picture" />
+                                    <img src={profilepict} style={{width:"30px", borderRadius:"50%"}} alt="profile picture" />
                                     <span className="Lexend ps-2 pt-1" style={{cursor: "pointer"}}
                                         onClick={() => navigate("/profile")}>{username}</span>
                                         {/* <Dropdown isOpen={dropOpen} toggle={()=>setDropOpen(!dropOpen)}>
